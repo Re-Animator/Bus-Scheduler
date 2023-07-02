@@ -8,15 +8,15 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busschedule.database.schedule.Schedule
 import com.example.busschedule.databinding.BusStopItemBinding
-import java.sql.Date
 import java.text.SimpleDateFormat
+import java.util.Date
 
-class BusStopAdapter(private val onItemClicked: (Schedule) -> Unit) : ListAdapter<Schedule, BusStopAdapter.BusStopViewHolder>(Diffcalback) {
+class BusStopAdapter(private val onItemClicked: (Schedule) -> Unit) : ListAdapter<Schedule, BusStopAdapter.BusStopViewHolder>(DiffCallback) {
     class BusStopViewHolder(private var binding: BusStopItemBinding) : RecyclerView.ViewHolder(binding.root){
         @SuppressLint("SimpleDateFormat")
         fun bind(schedule: Schedule) {
             binding.stopNameTextView.text = schedule.stopName
-            binding.arrivalTimeTextView.text = SimpleDateFormat("h:mm a".format(Date(schedule.arrivalTime.toLong() * 1000))).toString()
+            binding.arrivalTimeTextView.text = SimpleDateFormat("h:mm a").format(Date(schedule.arrivalTime.toLong() * 1000))
         }
     }
 
@@ -40,7 +40,7 @@ class BusStopAdapter(private val onItemClicked: (Schedule) -> Unit) : ListAdapte
     }
 
     companion object {
-        private val Diffcalback = object : DiffUtil.ItemCallback<Schedule>() {
+        private val DiffCallback = object : DiffUtil.ItemCallback<Schedule>() {
             override fun areItemsTheSame(oldItem: Schedule, newItem: Schedule) =
                 oldItem.id == newItem.id
 
