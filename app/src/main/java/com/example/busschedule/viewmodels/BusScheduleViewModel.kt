@@ -2,12 +2,14 @@ package com.example.busschedule.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.example.busschedule.database.schedule.Schedule
 import com.example.busschedule.database.schedule.ScheduleDao
+import kotlinx.coroutines.flow.Flow
 import java.lang.IllegalArgumentException
 
 class BusScheduleViewModel(private val scheduleDao: ScheduleDao) : ViewModel() {
-    fun fullSchedule() = scheduleDao.getAll()
-    fun scheduleForStopName(stopName: String) = scheduleDao.getByStopName(stopName)
+    fun fullSchedule(): Flow<List<Schedule>> = scheduleDao.getAll()
+    fun scheduleForStopName(stopName: String): Flow<List<Schedule>> = scheduleDao.getByStopName(stopName)
 }
 
 class BusScheduleViewModelFactory(private val scheduleDao: ScheduleDao) : ViewModelProvider.Factory {

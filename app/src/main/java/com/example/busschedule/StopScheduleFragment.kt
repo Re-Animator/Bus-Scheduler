@@ -21,6 +21,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.busschedule.databinding.StopScheduleFragmentBinding
@@ -75,8 +76,10 @@ class StopScheduleFragment : Fragment() {
         val busStopAdapter = BusStopAdapter {}
         recyclerView.adapter = busStopAdapter
 
-        GlobalScope.launch {
-            busStopAdapter.submitList(viewModel.scheduleForStopName(stopName))
+        lifecycle.coroutineScope.launch {
+            viewModel.scheduleForStopName(stopName).collect() {
+                busStopAdapter.submitList(it)
+            }
         }
     }
 
